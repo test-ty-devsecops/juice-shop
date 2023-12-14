@@ -1,10 +1,9 @@
 name: "Security-Gates"
 on:
   push:
-    branches: ["main"]
+    branches: ["master", "main"]
   pull_request:
-    # The branches below must be a subset of the branches above
-    branches: ["main"]
+    branches: ["*"]
   workflow_dispatch:
 
 jobs:
@@ -15,8 +14,10 @@ jobs:
         run: |
           echo ${{ github.event.repository.default_branch }}
           ls -la
-  my_second_job:
-    uses: test-ty-devsecops/action-monorepo/.github/workflows/simple-action.yml@main
+          
+  security-gates:
+    uses: test-ty-devsecops/action-monorepo/.github/workflows/security-gates.yml@main
+    needs: my_first_job
     permissions:
       actions: read
       contents: read
